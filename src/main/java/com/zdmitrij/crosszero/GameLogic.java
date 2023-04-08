@@ -2,107 +2,26 @@ package com.zdmitrij.crosszero;
 
 import java.util.Random;
 import java.util.Scanner;
+
 public class GameLogic {
+    boolean gameover = false;
 
     // метод игровой логики
-    void game() {
-        initTable();
-        while (true) {
-            turnHuman();
-            if (checkWin(SIGN_X)) {
-                System.out.println("YOU WIN!");
-                break;
-            }
-            if (isTableFull()) {
-                System.out.println("Sorry, DRAW!");
-                break;
-            }
-            turnAI();
-            printTable();
-            if (checkWin(SIGN_O)) {
-                System.out.println("AI WIN!");
-                break;
-            }
-            if (isTableFull()) {
-                System.out.println("Sorry, DRAW!");
-                break;
+    public void gameRunner() {
+        do {
+
+
+            gameoverCheck();
+        } while (!gameover);
+    }
+        boolean gameoverCheck() {
+            for (int i = 0; i < 3; i++) {
+                if (table[i][0] == table[i][1] == table[i][2]) != '.' ||
+                table[0][i] == table[1][i] == table[2][0] != '.') {
+                    gameover == true;
+                    return gameover;
+                    break;
+                }
             }
         }
-        System.out.println("GAME OVER.");
-        printTable();
-    }
-
-
-// метод начальной инициализации игровой таблицы
-    void initTable() {
-        for (int row = 0; row < 3; row++)
-            for (int col = 0; col < 3; col++)
-                table[row][col] = SIGN_EMPTY;
-    }
-
-    //метод отображающий состояние игровой таблицы
-    void printTable() {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++)
-                System.out.print(table[row][col] + " ");
-            System.out.println();
-        }
-    }
-
-    // ход игрока
-    void turnHuman() {
-        int x, y;
-        do {
-            System.out.println("Enter X and Y (1..3):");
-            x = scanner.nextInt() - 1;
-            y = scanner.nextInt() - 1;
-        } while (!isCellValid(x, y));
-        table[y][x] = SIGN_X;
-    }
-
-
-    //валидность ячейки - проверяет свободна и существует ли ячейка, указаны ли
-    // ошибочные координаты
-    boolean isCellValid(int x, int y) {
-        if (x < 0 || y < 0 || x >= 3 || y >= 3)
-            return false;
-        return table[y][x] == SIGN_EMPTY;
-    }
-
-
-    // ход компьютера
-    void turnAI() {
-        int x, y;
-        do {
-            x = random.nextInt(3);
-            y = random.nextInt(3);
-        } while (!isCellValid(x, y));
-        table[y][x] = SIGN_O;
-    }
-
-
-    // проверка победы и проверка ничьи
-    boolean checkWin(char dot) {
-        for (int i = 0; i < 3; i++)
-            if ((table[i][0] == dot && table[i][1] == dot &&
-                    table[i][2] == dot) ||
-                    (table[0][i] == dot && table[1][i] == dot &&
-                            table[2][i] == dot))
-                return true;
-        if ((table[0][0] == dot && table[1][1] == dot &&
-                table[2][2] == dot) ||
-                (table[2][0] == dot && table[1][1] == dot &&
-                        table[0][2] == dot))
-            return true;
-        return false;
-    }
-
-    // метод возвращает true если все ячейки заняты и false если хотя бы одна свободна
-    boolean isTableFull() {
-        for (int row = 0; row < 3; row++)
-            for (int col = 0; col < 3; col++)
-                if (table[row][col] == SIGN_EMPTY)
-                    return false;
-        return true;
-    }
 }
