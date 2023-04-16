@@ -1,12 +1,15 @@
 package com.zdmitrij.crosszero;
 
+import java.util.Arrays;
 
-
-//поле
 public class Field {
+    private final String[] values = new String[9];
 
-    char fieldX = 'X';
-    char field0 = '0';
-    char empty = '.';
-   char table[][] = {{'.', '.', '.'}, {'.', '.', '.'}, {'.', '.', '.'}};
+    public String[] getValues() {
+        return values;
     }
+
+    public void showField() {
+        System.out.println(Arrays.toString(values));
+    }
+}
