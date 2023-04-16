@@ -15,10 +15,12 @@ public class GameLogic {
         fillValues();
         while (true) {
             Integer firstPlayerInput = makeFirstPlayerMove();
-            field.getValues()[firstPlayerInput] = FIELD_X;
+            field.getValues()[firstPlayerInput - 1] = FIELD_X;
+            field.showField();
             checkWinner();
             Integer secondPlayerInput = makeSecondPlayerMove();
-            field.getValues()[secondPlayerInput] = FIELD_O;
+            field.getValues()[secondPlayerInput - 1] = FIELD_O;
+            field.showField();
             checkWinner();
         }
 
@@ -29,24 +31,23 @@ public class GameLogic {
     }
 
     private Integer makeFirstPlayerMove() {
-        System.out.println("Enter value");
+        System.out.println("Enter value X");
         field.showField();
         Integer choice = scanner.nextInt();
         while (validateInput(choice)) {
-            System.out.println("Enter value");
+            System.out.println("Enter value X again");
             field.showField();
             choice = scanner.nextInt();
         }
-
         return choice;
     }
 
     private Integer makeSecondPlayerMove() {
-        System.out.println("Enter value");
+        System.out.println("Enter value 0");
         field.showField();
         Integer choice = scanner.nextInt();
         while (validateInput(choice)) {
-            System.out.println("Enter value");
+            System.out.println("Enter value 0 again");
             field.showField();
             choice = scanner.nextInt();
         }
@@ -55,11 +56,16 @@ public class GameLogic {
     }
 
     private boolean validateInput(Integer input) {
-        return input <= 0 || input > 8;
+
+        return  field.getValues()[input] != EMPTY ||  (input < 1 || input > 9);
     }
 
     private void checkWinner() {
-        System.out.println(FIELD_X);
-        System.exit(0);
+        if (field.getValues()[0] == field.getValues()[1] && field.getValues()[1] == field.getValues()[2])  {
+            System.out.println(FIELD_X + " - YOU WIN !");
+            System.exit(0);
+        }
     }
 }
+
+// НЕ ДОПУСКАТЬ ПЕРЕЗАПИСИ ЗАПОЛНЕННОЙ ЯЧЕЙКИ!
